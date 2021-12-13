@@ -33,7 +33,7 @@
           </a>
           <div class="dropdown-menu dropdown-menu-end pt-0">
             <div class="dropdown-header bg-light py-2">
-              <div class="fw-semibold">{{ Auth::user()->username }}</div>
+              <div class="fw-semibold">{{ Auth::guard('admin')->user()->username }}</div>
             </div><a class="dropdown-item" href="#">
               <svg class="icon me-2">
                 <use xlink:href="{{ asset('dist/vendors/@coreui/icons/svg/free.svg#cil-bell') }}"></use>
