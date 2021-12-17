@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class AdminAuthController extends Controller
 {
@@ -23,11 +24,13 @@ class AdminAuthController extends Controller
     {
         $credentials = $request->only('username', 'password');
 
-        if (Auth::guard('admin')->attempt($credentials)) {
-            return redirect()->intended('admin/');
-        } else {
-            return redirect()->back()->withInput();
+        if (! Auth::guard('admin')->attempt($credentials)) {
+            throw ValidationException::withMessages([
+                'username' => __('auth.failed'),
+            ]);
         }
+
+        return redirect()->intended('admin/');
     }
 
     public function logout(){
